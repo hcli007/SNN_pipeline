@@ -75,7 +75,7 @@ Alyr	Alyr	Super-Rosides	Brassicales	Brassicaceae	Arabidopsis lyrata
 atr	atr_	Basal-Angiosperm	Amborellales	Amborellaceae	Amborella trichopoda
 ```
 ### Step 3: Constructing a species overall collinear network
-Run the Synetbuild module.
+Run the **synetbuild** module.
 
 `synetbuild -i your_path/species_list -d  your_pep_bed_path -o your_output_path`
 
@@ -107,16 +107,16 @@ Before creating SNN, you need to format the syn network files.
 
 After running the previous module, you will receive a **prefix file**. 
 
-Create an SNN using the following command.
+Create an SNN using the following command:
 
 `synetcontext -i your_path/species_list -e your_path/cleaned-network_file -n your_path/SynNet_f_file -N your_path/prefix_file -d your_pep_bed_path -o your_output_path -S 10 --block_stat --KEGG`
 
-Or provide a custom node ID list.
+Or provide a custom node ID list:
 
 `synetcontext -i your_path/species_list -I your_path/ID_list_file -n your_path/SynNet_f_file -N your_path/prefix_file -d your_pep_bed_path -o your_output_path -S 10 --block_stat --KEGG`
 Enter the maximum range of flanking genes you want to search for in `- S`.
 
-if you input `--block_stat` , module will statistically analyze the blocks that make up SNN. 
+if you input `--block_stat` , module will statistically analyze the blocks that make up SNN:
 
 ```
 	Malus x domestica	Prunus persica	Arabidopsis thaliana	Arabidopsis lyrata	Amborella trichopoda
