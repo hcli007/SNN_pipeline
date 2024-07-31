@@ -1,13 +1,23 @@
 # A pipeline for constructing and analyzing synteny network
 A pipeline for constructing and analyzing synteny network.
 ## Requirements
-python >= 3.8
+python>=3.8
 
 MCScanX
 
-diamond >=0.9.14
+diamond>=0.9.14
 
-HMMER >=3.1
+HMMER>=3.1
+
+python library:
+
+igraph>=0.11.6
+
+networkx>=3.3
+
+numpy>=2.0.1
+
+pandas>=2.2.2
 
 ## Usage
 ### install snn_pipeline
