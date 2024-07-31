@@ -2,9 +2,13 @@
 A pipeline for constructing and analyzing synteny network
 ## Requirements
 python >= 3.8
+
 MCScanX
+
 diamond >=0.9.14
+
 HMMER >=3.1
+
 ## Usage
 ### install snn_pipeline
 Create a dedicated environment for SNN (Recommended) 
@@ -18,6 +22,10 @@ Install python （Recommend installing versions after Python 3.8）
 Install snn_pipline
 
 `pip install snn_pipeline`
+
+View instance files
+
+`pip show snn_pipeline`
 
 Install [MCScanX](https://github.com/wyp1125/MCScanX), [diamond](https://github.com/bbuchfink/diamond), [HMMER](https://github.com/EddyRivasLab/hmmer) and [kofam_scan](https://github.com/takaram/kofam_scan) and ensure that the above software has been added to the environment variables.
 
