@@ -1,5 +1,5 @@
 # A pipeline for constructing and analyzing synteny network
-A pipeline for constructing and analyzing synteny network
+A pipeline for constructing and analyzing synteny network.
 ## Requirements
 python >= 3.8
 
@@ -11,23 +11,43 @@ HMMER >=3.1
 
 ## Usage
 ### install snn_pipeline
-Create a dedicated environment for SNN (Recommended) 
+Create a dedicated environment for SNN (Recommended).
 
 `conda create -n snn_pipline`
 
-Install python （Recommend installing versions after Python 3.8）
+`conda activate snn_pipline`
+
+Install python (Recommend installing versions after Python 3.8).
 
 `conda install python`
 
-Install snn_pipline
+Install snn_pipline.
 
 `pip install snn_pipeline`
 
-View instance files
+You can also manually install this process.
+
+`tar -zxvf snn_pipeline-0.1.0.tar.gz`
+
+`cd snn_pipeline-0.1.0`
+
+`pip install .`
+
+View the installation location of the package.
 
 `pip show snn_pipeline`
 
-Install [MCScanX](https://github.com/wyp1125/MCScanX), [diamond](https://github.com/bbuchfink/diamond), [HMMER](https://github.com/EddyRivasLab/hmmer) and [kofam_scan](https://github.com/takaram/kofam_scan) and ensure that the above software has been added to the environment variables.
+Install [MCScanX](https://github.com/wyp1125/MCScanX), [diamond](https://github.com/bbuchfink/diamond), [hmmer](https://github.com/EddyRivasLab/hmmer) and [kofam_scan](https://github.com/takaram/kofam_scan) and **ensure that the above software has been added to the environment variables**.
+
+Try:
+`conda install bioconda::diamond`
+
+`conda install bioconda::hmmer`
+
+Test files in 
+`/snn_pipeline-0.1.0/data`.
+
+
 
 ### Step 1: Prepare the bed file and pep file of the species 
 Firstly, please prepare bed files for all species and fasta format files for proteins. Determine a **four character abbreviation** for each species, 
@@ -42,7 +62,7 @@ bed file of _Amborella trichopoda_:
 
 `Atrscaffold00001	atr_scaffold00001.1atr	3379	6049`
 
-the second column is the ID number of cDNA, which needs to include the species abbreviation, such as ath_T1G01010. The third column represents the starting position of cDNA, and the fourth column represents the ending position of cDNA. For the fasta file of proteins, please ensure that the protein ID in the file corresponds to the ID in the bed file, and change the file suffix to. pep. Ensure that the bed file and pep file with the same abbreviation, for example, the bed and pep files corresponding to Arabidopsis thaliana are **ath.bed** and **ath.pep**, respectively.
+The second column is the ID number of cDNA, which needs to include the species abbreviation, such as ath_T1G01010. The third column represents the starting position of cDNA, and the fourth column represents the ending position of cDNA. For the fasta file of proteins, please ensure that the protein ID in the file corresponds to the ID in the bed file, and change the file suffix to. pep. Ensure that the bed file and pep file with the same abbreviation, for example, the bed and pep files corresponding to Arabidopsis thaliana are **ath.bed** and **ath.pep**, respectively.
 ### Step 2: Create a name list file that includes species abbreviations and taxonomic information
 Fill in the names of the pep file and bed file corresponding to the species in the first column of the name list, the abbreviation of the ID in the second column of the name list, and the classification information of the species in the third, fourth, fifth, and sixth columns.
 for example:
@@ -55,20 +75,20 @@ Alyr	Alyr	Super-Rosides	Brassicales	Brassicaceae	Arabidopsis lyrata
 atr	atr_	Basal-Angiosperm	Amborellales	Amborellaceae	Amborella trichopoda
 ```
 ### Step 3: Constructing a species overall collinear network
-Run the Synetbuild module
+Run the Synetbuild module.
 
 `synetbuild -i your_path/species_list -d  your_pep_bed_path -o your_output_path`
 
-You can input some additional options to adjust the parameters for building the network
+You can input some additional options to adjust the parameters for building the network.
 
 `synetbuild -i your_path/species_list -d  your_pep_bed_path -o your_output_path -k 5 -s 5 -m 10 -p 4 -D -T`
 
 If you enter the above parameters, a collinear network will be constructed with the top **5** results **hit** by blastp, Minimum **5** of **Anchors** for a synteny block, and Maximum **10** of Genes allowed as the **GAP** between Anchors as parameters, and **10** threads will be used for blastp. Inputting` -D` will run MCScanX's duplicate_gene_classifier module, and inputting` -T `will run the detectability collineear_tandem_arrays module, which can help you better search for tandem genes. Detailed help information can be viewed through `synetbuild -h`
 
-After the step is executed, you will receive a **SynNet** file, which is the total network file and will be used for subsequent analysis
+After the step is executed, you will receive a **SynNet** file, which is the total network file and will be used for subsequent analysis.
 
 ### Step 4: Extract the networks that interest you
-Take the **SynNet** file obtained in the previous step as input for `-n`, input the protein model file `-m`, and you will get a network composed of nodes hit by the model
+Extracting subnetworks using the **synetfind** module. Take the **SynNet** file obtained in the previous step as input for `-n`, use `-m` input your protein model file , and you will get a network composed of nodes hit by the model.
 
 `synetfind -i your_path/species_list -m your_path/hmm_file -d your_pep_bed_path -n your_path/SynNet_file -o your_output_path`
 
@@ -76,9 +96,9 @@ You can input the threshold of E-value through `-E` to make the search condition
 
 `synetfind -i your_path/species_list -m your_path/hmm_file -d your_pep_bed_path -n your_path/SynNet_file -o your_output_path -E 0.01`
 
-Detailed help information can be viewed through `subnetwork -h`
+Detailed help information can be viewed through `subnetwork -h`.
 
-After the step is executed, you will receive a **cleaned-network** file, this is a two column file composed of nodes hit by the model.
+After the step is executed, you will receive a **cleaned-network** file, this is a two column file composed of nodes hit by the model. At the same time, you will receive a **SynNet_f** file containing collinearity information for all species. Subsequent modules require the input of these two files.
 
 ### Step 5: Create a synteny neighborhood network
 Before creating SNN, you need to format the syn network files.
@@ -87,11 +107,11 @@ Before creating SNN, you need to format the syn network files.
 
 After running the previous module, you will receive a **prefix file**. 
 
-Create an SNN using the following command
+Create an SNN using the following command.
 
 `synetcontext -i your_path/species_list -e your_path/cleaned-network_file -n your_path/SynNet_f_file -N your_path/prefix_file -d your_pep_bed_path -o your_output_path -S 10 --block_stat --KEGG`
 
-Or provide a custom node ID list
+Or provide a custom node ID list.
 
 `synetcontext -i your_path/species_list -I your_path/ID_list_file -n your_path/SynNet_f_file -N your_path/prefix_file -d your_pep_bed_path -o your_output_path -S 10 --block_stat --KEGG`
 Enter the maximum range of flanking genes you want to search for in `- S`.
