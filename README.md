@@ -85,7 +85,7 @@ Alyr	Alyr	Super-Rosides	Brassicales	Brassicaceae	Arabidopsis lyrata
 atr	atr_	Basal-Angiosperm	Amborellales	Amborellaceae	Amborella trichopoda
 ```
 ### Step 3: Constructing a species overall collinear network
-Run the **synetbuild** module.
+Run the **synetbuild** module. Please ensure that the content you input is an **absolute path**
 
 `synetbuild -i your_path/species_list -d  your_pep_bed_path -o your_output_path`
 
