@@ -11,13 +11,13 @@ HMMER>=3.1
 
 python library:
 
-igraph>=0.11.6
+igraph>=0.1.14
 
-networkx>=3.3
+networkx>=2.6.3
 
-numpy>=2.0.1
+numpy>=1.21.2
 
-pandas>=2.2.2
+pandas>=1.4.1
 
 - [install](#install)
 - [prepare data](#preparation)
