@@ -19,7 +19,15 @@ numpy>=2.0.1
 
 pandas>=2.2.2
 
+- [install](#install)
+- [prepare data](#preparation)
+- [build List](#buildlist)
+- [build database](#builddatabase)
+- [extract target network](#extract)
+- [build SNN](#SNN)
+
 ## Usage
+<a name="install"></a>
 ### install snn_pipeline
 Create a dedicated environment for SNN (Recommended).
 
@@ -58,7 +66,7 @@ Test files in
 `/snn_pipeline-0.1.0/data`.
 
 
-
+<a name="preparation"></a>
 ### Step 1: Prepare the bed file and pep file of the species 
 Firstly, please prepare bed files for all species and fasta format files for proteins. Determine a **four character abbreviation** for each species, 
 for example, _Arabidopsis thaliana_ can be set as `ath_`, and _Amborella trichopoda_ can be set as `atr_`.
@@ -73,6 +81,8 @@ bed file of _Amborella trichopoda_:
 `Atrscaffold00001	atr_scaffold00001.1atr	3379	6049`
 
 The second column is the ID number of cDNA, which needs to include the species abbreviation, such as ath_T1G01010. The third column represents the starting position of cDNA, and the fourth column represents the ending position of cDNA. For the fasta file of proteins, please ensure that the protein ID in the file corresponds to the ID in the bed file, and change the file suffix to. pep. Ensure that the bed file and pep file with the same abbreviation, for example, the bed and pep files corresponding to Arabidopsis thaliana are **ath.bed** and **ath.pep**, respectively.
+
+<a name="buildlist"></a>
 ### Step 2: Create a name list file that includes species abbreviations and taxonomic information
 Fill in the names of the pep file and bed file corresponding to the species in the first column of the name list, the abbreviation of the ID in the second column of the name list, and the classification information of the species in the third, fourth, fifth, and sixth columns.
 for example:
@@ -84,6 +94,8 @@ ath	ath_	Super-Rosides	Brassicales	Brassicaceae	Arabidopsis thaliana
 Alyr	Alyr	Super-Rosides	Brassicales	Brassicaceae	Arabidopsis lyrata
 atr	atr_	Basal-Angiosperm	Amborellales	Amborellaceae	Amborella trichopoda
 ```
+
+<a name="builddatabase"></a>
 ### Step 3: Constructing a species overall collinear network
 Run the **synetbuild** module.
 
@@ -97,6 +109,7 @@ If you enter the above parameters, a collinear network will be constructed with 
 
 After the step is executed, you will receive a **SynNet** file, which is the total network file and will be used for subsequent analysis.
 
+<a name="extract"></a>
 ### Step 4: Extract the networks that interest you
 Extracting subnetworks using the **synetfind** module. Take the **SynNet** file obtained in the previous step as input for `-n`, use `-m` input your protein model file , and you will get a network composed of nodes hit by the model.
 
@@ -110,6 +123,7 @@ Detailed help information can be viewed through `synetfind -h`.
 
 After the step is executed, you will receive a **cleaned-network** file, this is a two column file composed of nodes hit by the model. At the same time, you will receive a **SynNet_f** file containing collinearity information for all species. Subsequent modules require the input of these two files.
 
+<a name="SNN"></a>
 ### Step 5: Create a synteny neighborhood network
 Before creating SNN, you need to format the syn network files.
 
