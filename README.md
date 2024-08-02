@@ -21,8 +21,8 @@ pandas>=2.2.2
 
 - [install](#install)
 - [prepare data](#preparation)
-- [build List](#buildlist)
-- [build database](#builddatabase)
+- [build species_list](#buildlist)
+- [build network_database](#builddatabase)
 - [extract target network](#extract)
 - [build SNN](#SNN)
 
