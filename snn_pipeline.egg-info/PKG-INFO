@@ -1,0 +1,24 @@
+Metadata-Version: 2.1
+Name: snn_pipeline
+Version: 0.1.2
+Summary: A pipeline for constructing and analyzing synteny network
+Home-page: https://github.com/hcli007/SNN_pipeline
+Author: Haochen li, Tao Zhao
+Author-email: lhc2018@nwafu.edu.cn, tao.zhao@nwafu.edu.cn
+License: GPL-3.0
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Requires-Python: >=3.8
+Description-Content-Type: text/plain
+License-File: LICENSE
+Requires-Dist: biopython>=1.79
+Requires-Dist: igraph>=0.1.14
+Requires-Dist: networkx>=2.6.3
+Requires-Dist: numpy>=1.21.2
+Requires-Dist: pandas>=1.4.1
+
+A pipeline for constructing and analyzing synteny network
+https://github.com/hcli007/SNN_pipeline

@@ -1,0 +1,5 @@
+[console_scripts]
+synetbuild = snn_pipeline.synetbuild:main
+synetcontext = snn_pipeline.synetcontext:main
+synetfind = snn_pipeline.synetfind:main
+synetprefix = snn_pipeline.synetprefix:main
