@@ -1,1 +1,2 @@
-
+# Ignore all files in the tests directory
+tests/
