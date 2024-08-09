@@ -1,3 +1,4 @@
+[![Latest PyPI Version](https://img.shields.io/pypi/v/snn-pipeline)](https://pypi.org/project/snn-pipeline/)
 
 # A pipeline for constructing and analyzing synteny network
 A pipeline for constructing and analyzing synteny network.
