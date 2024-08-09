@@ -64,7 +64,7 @@ Try:
 `conda install bioconda::hmmer`
 
 Test files in 
-`/snn_pipeline-0.1.0/data`.
+`/test-data`.
 
 
 <a name="preparation"></a>
