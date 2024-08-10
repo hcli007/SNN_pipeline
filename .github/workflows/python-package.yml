@@ -28,16 +28,16 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        python -m pip install snn_pipeline
     - name: Run Python test1
       run: |
-        python -m unittest snn_pipeline/synetbuild.py
+        synetbuild
     - name: Run Python test3
       run: |
-        python -m unittest snn_pipeline/synetprefix.py
+        synetprefix
     - name: Run Python test4
       run: |
-        python -m unittest snn_pipeline/synetcontext.py
+        synetcontext
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
