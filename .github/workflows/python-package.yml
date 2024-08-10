@@ -31,13 +31,16 @@ jobs:
         python -m pip install snn_pipeline
     - name: Run Python test1
       run: |
-        synetbuild
+        synetbuild -h
+    - name: Run Python test2
+      run: |
+        synetfind -h 
     - name: Run Python test3
       run: |
-        synetprefix
+        synetprefix -h 
     - name: Run Python test4
       run: |
-        synetcontext
+        synetcontext -h 
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
