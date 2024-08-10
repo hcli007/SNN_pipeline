@@ -29,15 +29,22 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Run Python tests
+    - name: Run Python test1
       run: |
         python -m unittest snn_pipeline/synetbuild.py
+    - name: Run Python test2
+      run: |
+        python -m unittest snn_pipeline/synetfind.py
+    - name: Run Python test3
+      run: |
+        python -m unittest snn_pipeline/synetprefix.py
+    - name: Run Python test4
+      run: |
+        python -m unittest snn_pipeline/synetcontext.py
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
-      run: |
-        pytest
+
