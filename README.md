@@ -1,5 +1,5 @@
-[![Latest PyPI Version](https://img.shields.io/pypi/v/snn-pipeline)](https://pypi.org/project/snn-pipeline/)
-
+[![Latest PyPI Version](https://img.shields.io/pypi/v/snn-pipeline.svg)](https://pypi.org/project/snn-pipeline/)
+[![Python package](https://github.com/hcli007/SNN_pipeline/actions/workflows/python-package.yml/badge.svg)](https://github.com/hcli007/SNN_pipeline/actions/workflows/python-package.yml)
 # A pipeline for constructing and analyzing synteny network
 A pipeline for constructing and analyzing synteny network.
 ## Requirements
