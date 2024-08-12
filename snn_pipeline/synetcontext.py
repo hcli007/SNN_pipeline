@@ -591,7 +591,7 @@ def add_kegg_info(kofamscan_output, out_path1, sp_cluster_file, out_path2):
         for l2 in sp_cluster_table:
             if not l2.startswith("#"):
                 l2_sp = l2.split("\t")
-                definition = ko_dic.get(l2_sp[0])
+                definition = ko_dic.get(l2_sp[0]).rstrip("\n")
                 out_str1 = "\t".join(l2_sp[:5])
                 out_str2 = "\t".join(l2_sp[-2:])
                 new_text = f"{out_str1}\t{definition}\t{out_str2}"
