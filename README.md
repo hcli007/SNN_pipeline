@@ -137,12 +137,22 @@ Create an SNN using the following command:
 
 `synetcontext -i your_path/species_list -e your_path/cleaned-network_file -n your_path/SynNet_f_file -N your_path/prefix_file -d your_pep_bed_path -o your_output_path -S 10 --block_stat --KEGG`
 
-Or provide a custom node ID list:
+In the example, the `-e` parameter is used, which will extract the node information from the edge file and search for the syntenic genes upstream and downstream of these nodes. Please input the synteny information file for all species with the `-n` option and enter the prefix file with the `-N` option. and enter the maximum range of flanking genes you want to search for in `- S`.
+
+If you have classified genes based on phylogenetic relationships or community structures in a network, or if you have specific nodes of interest, you can use the `-I` instead of `-e` as input:
 
 `synetcontext -i your_path/species_list -I your_path/ID_list_file -n your_path/SynNet_f_file -N your_path/prefix_file -d your_pep_bed_path -o your_output_path -S 10 --block_stat --KEGG`
-Enter the maximum range of flanking genes you want to search for in `- S`.
 
-if you input `--block_stat` , module will statistically analyze the blocks that make up SNN:
+The `-I` parameter requires you to prepare a customized list of nodes:
+```
+AlyrAL1G11030
+AlyrAL1G11030
+AlyrAL1G51660
+AlyrAL1G11030
+AlyrAL1G35790
+```
+
+if you input `--block_stat` , module will statistically analyze the blocks that make up SNN, the following content is from the file **block_len_avg_stat.tsv**. The results represent the block composition of the example SNN, expressed as a matrix of average block lengths:
 
 ```
 	Malus x domestica	Prunus persica	Arabidopsis thaliana	Arabidopsis lyrata	Amborella trichopoda
