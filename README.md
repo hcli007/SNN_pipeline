@@ -164,3 +164,16 @@ Amborella trichopoda	10.45	12.38888888888889	8.333333333333334	8.75	6.0
 ```
 
 if you input '--KEGG', the module will use kofamscan to annotate the proteins corresponding to nodes in SNN.
+```
+#ID	Clade	Order	Family	Species_Name	KEGG_definition	Greedy_cluster	Infomap_cluster
+atr_scaffold00040.1atr	Basal-Angiosperm	Amborellales	Amborellaceae	Amborella trichopoda	None	119	260
+ath_AT1G43710	Super-Rosides	Brassicales	Brassicaceae	Arabidopsis thaliana	serine decarboxylase [EC:4.1.1.-]	119	260
+atr_scaffold00040.6atr	Basal-Angiosperm	Amborellales	Amborellaceae	Amborella trichopoda	None	120	256
+ath_AT1G43650	Super-Rosides	Brassicales	Brassicaceae	Arabidopsis thaliana	None	120	256
+atr_scaffold00040.18atr	Basal-Angiosperm	Amborellales	Amborellaceae	Amborella trichopoda	tubby and related proteins	121	255
+ath_AT1G43640	Super-Rosides	Brassicales	Brassicaceae	Arabidopsis thaliana	tubby and related proteins	121	255
+atr_scaffold00040.25atr	Basal-Angiosperm	Amborellales	Amborellaceae	Amborella trichopoda	None	122	254
+ath_AT1G43630	Super-Rosides	Brassicales	Brassicaceae	Arabidopsis thaliana	None	122	254
+atr_scaffold00040.35atr	Basal-Angiosperm	Amborellales	Amborellaceae	Amborella trichopoda	cinnamyl-alcohol dehydrogenase [EC:1.1.1.195]	123	253
+ath_AT1G43620	Super-Rosides	Brassicales	Brassicaceae	Arabidopsis thaliana	sterol 3beta-glucosyltransferase [EC:2.4.1.173]	123	253
+```
