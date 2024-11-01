@@ -121,6 +121,9 @@ You can input the threshold of E-value through `-E` to make the search condition
 
 `synetfind -i your_path/species_list -m your_path/hmm_file -d your_pep_bed_path -n your_path/SynNet_file -o your_output_path -E 0.01`
 
+If you have a specific list of IDs：
+`synetfind -l your_path/your_id_list_file -n your_path/SynNet_file -o your_output_path`
+
 Detailed help information can be viewed through `synetfind -h`.
 
 After the step is executed, you will receive a **cleaned-network** file, this is a two column file composed of nodes hit by the model. At the same time, you will receive a **SynNet_f** file containing collinearity information for all species. Subsequent modules require the input of these two files.
