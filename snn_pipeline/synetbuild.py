@@ -4,11 +4,13 @@
 # date: 24/7/2024 下午10:23
 import subprocess
 import os
+import sys
 import datetime
 import time
 import shutil
 import itertools
 import argparse
+import logging
 
 
 def check_external_software():
@@ -175,6 +177,9 @@ def main():
     parser.add_argument('-D', '--duplicate', action='store_true', help='-D: MCScanX duplicate_gene_classifier')
     parser.add_argument('-T', '--tandem', action='store_true', help='-T: MCScanX detect_collinear_tandem_arrays')
     args = parser.parse_args()
+    para = " ".join(sys.argv)
+    feedback = f'Execution parameters:\t{para}'
+    print(feedback, end="\n", flush=True)
     if args.duplicate:
         duplicate = True
     else:

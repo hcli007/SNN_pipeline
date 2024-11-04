@@ -4,6 +4,7 @@
 # date: 24/7/2024 上午11:05
 import argparse
 import os
+import sys
 import datetime
 
 
@@ -58,7 +59,7 @@ def main():
           Usage: python Merged_block_prefix -n SynNet_file
           '''
     text2 = '''-n: input Synnet_file; 
-    input Synnet_file which generated through SynBuild-X script
+    input Synnet_file which generated through SynBuild
     '''
     text3 = '''-o: output_dir; 
        Output files to the specified directory
@@ -67,6 +68,9 @@ def main():
     parser.add_argument('-n', '--synnet_file', type=str, required=True, help=text2)
     parser.add_argument('-o', '--out_dir', type=str, required=True, help=text3)
     args = parser.parse_args()
+    para = " ".join(sys.argv)
+    feedback = f'Execution parameters:\t{para}'
+    print(feedback, end="\n", flush=True)
     block_trans(complete_path(args.synnet_file), complete_path(args.out_dir))
 
 

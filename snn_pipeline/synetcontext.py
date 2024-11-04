@@ -3,15 +3,18 @@
 # Python3
 # date: 27/7/2024 下午3:08
 import os
+import sys
 import shutil
 import subprocess
 import re
 import datetime
+import numpy as np
 import pandas as pd
 import networkx as nx
 import argparse
 import igraph as ig
 from collections import Counter
+from sklearn.feature_extraction.text import CountVectorizer
 from Bio import SeqIO
 
 
@@ -581,21 +584,100 @@ def add_kegg_info(kofamscan_output, out_path1, sp_cluster_file, out_path2):
             if l1.startswith("*"):
                 l1_sp = l1.split("\t")
                 gene_name = l1_sp[1]
+                ko_id = l1_sp[2]
                 ko_definition = l1_sp[6].replace("\"", "")
-                new_text = f"{gene_name}\t{ko_definition}"
+                new_text = f"{gene_name}\t{ko_id}\t{ko_definition}"
                 print(new_text.rstrip("\n"), file=f1)
     ko_dic = read_dic(out_path1)
     sp_cluster_table = read_table(sp_cluster_file)
     with open(out_path2, 'a+', encoding='utf-8') as f2:
-        print("#ID\tClade\tOrder\tFamily\tSpecies_Name\tKEGG_definition\tGreedy_cluster\tInfomap_cluster", file=f2)
+        print("id\tclade\torder\tfamily\tspecies_name\tKO_id\tKO_definition\tgreedy_cluster\tinfomap_cluster", file=f2)
         for l2 in sp_cluster_table:
             if not l2.startswith("#"):
                 l2_sp = l2.split("\t")
-                definition = ko_dic.get(l2_sp[0]).rstrip("\n")
+                try:
+                    match_value = ko_dic.get(l2_sp[0]).rstrip("\n")
+                except AttributeError:
+                    match_value = "None\tNone"
                 out_str1 = "\t".join(l2_sp[:5])
                 out_str2 = "\t".join(l2_sp[-2:])
-                new_text = f"{out_str1}\t{definition}\t{out_str2}"
+                new_text = f"{out_str1}\t{match_value}\t{out_str2}"
                 print(new_text.rstrip("\n"), file=f2)
+
+
+def block_info_cluster_info_trans(input_cluster_col2, input_syn_clean_result, out_put):
+    infomap_dic = read_dic(input_cluster_col2)
+    with open(out_put, 'a+', encoding='utf-8') as f:
+        clean_result_table = read_table(input_syn_clean_result)
+        for l1 in clean_result_table:
+            l1_sp = l1.split("\t")
+            line_table = []
+            for l2 in l1_sp[2:]:
+                l2_sp = l2.split(">")
+                for l3 in l2_sp:
+                    if infomap_dic.get(l3) is not None:
+                        line_table.append(int(infomap_dic.get(l3)))
+            line_table = list(set(line_table))
+            out_str = '\t'.join(map(str, line_table))
+            print(f"{l1_sp[0]}\t{l1_sp[1]}\t{out_str}", file=f)
+
+
+def block_info_countvectorizer(input_block_info_cluster_file, block_info_df_out):
+    block_info_cluster_table = read_table(input_block_info_cluster_file)
+    block_info_cluster_array = []
+    id_block_table = []
+    vocab = []
+    for l1 in block_info_cluster_table:
+        l1_sp = l1.split("\t")
+        line_table = [l1_sp[0], l1_sp[1]]
+        id_block_table.append(line_table)
+        block_info_cluster_array.append("\t".join(l1_sp[2:]))
+        for l2 in l1_sp[2:]:
+            vocab.append(l2)
+    df_id = pd.DataFrame(id_block_table, columns=['id', 'block_id'])
+    vocab = (set(vocab))
+    vectorizer = CountVectorizer(vocabulary=vocab)
+    count_matrix = vectorizer.fit_transform(block_info_cluster_array)
+    count_array = count_matrix.toarray()
+    df_info = pd.DataFrame(count_array)
+    df_all = df_id.join(df_info)
+    df_all.to_csv(block_info_df_out, sep="\t", index=False, header=False)
+
+
+def block_specificity_score(block_info_df, out_put):
+    matrix_table = read_table(block_info_df)
+    matrix_prefix_table = []
+    block_id_table = []
+    target_id_table = []
+    for l1 in matrix_table:
+        l1_sp = l1.split("\t")
+        target_id_table.append(l1_sp[0])
+        block_id_table.append(l1_sp[1])
+        line_table = []
+        for l2 in l1_sp[2:]:
+            line_table.append(l2)
+        matrix_prefix_table.append(line_table)
+
+    matrix = np.array(matrix_prefix_table)
+    arr_numeric = matrix.astype(float)
+    # 计算每一列的平均值
+    col_means = np.mean(arr_numeric, axis=0)
+    # 计算每一列的标准差
+    col_stds = np.std(arr_numeric, axis=0)
+    col_stds[col_stds == 0] = 1e-8
+    # 标准化处理，然后取绝对值
+    standardized_matrix = np.abs((arr_numeric - col_means) / col_stds)
+    # standardized_matrix = ((arr_numeric - col_means) / col_stds)
+    # 计算每一行的和
+    row_sums = np.sum(standardized_matrix, axis=1)
+    count = 0
+    with open(out_put, 'a+', encoding='utf-8') as f1:
+        names = 'target_gene\tblock_id\tblock_specificity_score'
+        print(names.rstrip("\n"), file=f1)
+        for l3 in range((len(block_id_table)) - 1):
+            count = count + 1
+            out_str = f"{target_id_table[count]}\t{block_id_table[count]}\t{row_sums[count]}"
+            print(out_str.rstrip("\n"), file=f1)
 
 
 def main():
@@ -603,15 +685,14 @@ def main():
         the genes listed.; 
            '''
 
-    text2 = '''-I: list of gene ID; input a list of gene ID;
+    text2 = '''-l: list of gene ID; input a list of gene ID;
         The option -I can be selected to input an edge file as an alternative.
         '''
 
     text3 = '''-e: edge_file; input a edge file with two columns;
-        The option -i can be selected to input a namelist file as an alternative.
         '''
 
-    text4 = '''-n: input SynNet_f file; 
+    text4 = '''-b: input SynNet_f file; 
         Input SynNet_f file which generated through synetfind.py script
         '''
 
@@ -652,13 +733,16 @@ def main():
     text14 = '''-P: input all species pep_file 
         '''
 
+    text15 = '''--block_mining: Create a block feature matrix and calculate the specificity score 
+        '''
+
     parser = argparse.ArgumentParser(description=text1)
     group = parser.add_mutually_exclusive_group(required=True)
     group2 = parser.add_mutually_exclusive_group(required=True)
     parser.add_argument('-i', '--species_namelist_file', type=str, required=True, help=text8)
-    group.add_argument('-I', '--id_list', type=str, help=text2)
+    group.add_argument('-l', '--id_list', type=str, help=text2)
     group.add_argument('-e', '--edge_file', type=str, help=text3)
-    parser.add_argument('-n', '--SynNet_f', type=str, required=True, help=text4)
+    parser.add_argument('-b', '--SynNet_f', type=str, required=True, help=text4)
     parser.add_argument('-N', '--SynNet_prefix', type=str, required=True, help=text5)
     group2.add_argument('-d', '--data_path', type=str, help=text7)
     group2.add_argument('-P', '--all_pep', type=str, help=text14)
@@ -668,7 +752,11 @@ def main():
     parser.add_argument('-r', '--retain', action='store_true', help=text10)
     parser.add_argument('--KEGG', action='store_true', help=text12)
     parser.add_argument('--block_stat', action='store_true', help=text13)
+    parser.add_argument('--block_mining', action='store_true', help=text15)
     args = parser.parse_args()
+    para = " ".join(sys.argv)
+    feedback = f'Execution parameters:\t{para}'
+    print(feedback, end="\n", flush=True)
 
     block_id_table = []
     base_filename = ''
@@ -706,7 +794,6 @@ def main():
     sp_ko_cls_sum_file = output_path + path_sep + base_filename + '_''k' + '1' + '_sp_KO_cluster.tsv'
     standard_block_path = output_path + path_sep + 'block_info'
     print('reading dic', end="\n", flush=True)
-
     synnet_prefix_dic = read_dic(complete_path(args.SynNet_prefix))
     if args.data_path:
         merge_pep(args.species_namelist_file, complete_path(args.data_path), output_path)
@@ -733,6 +820,16 @@ def main():
     if args.block_stat:
         print('Calculate block information', end="\n", flush=True)
         block_stat(complete_path(args.species_namelist_file), raw_result_filter_path, output_path)
+    if args.block_mining:
+        print('Calculate block specificity score', end="\n", flush=True)
+        os.makedirs(output_path + path_sep + 'specific_block')
+        block_info_cluster_file = f'{output_path}/specific_block/{base_filename}_k1_block_info.tsv'
+        block_info_df = f'{output_path}/specific_block/{base_filename}_k1_block_info_matrix.tsv'
+        block_info_score = f'{output_path}/specific_block/{base_filename}_k1_block_info_score.tsv'
+        block_info_cluster_info_trans(k1_group_path, raw_result_filter_path, block_info_cluster_file)
+        block_info_countvectorizer(block_info_cluster_file, block_info_df)
+        block_specificity_score(block_info_df, block_info_score)
+
     if args.KEGG:
         check_external_software()
         print('Start KEGG annotation process')
