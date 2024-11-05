@@ -255,7 +255,7 @@ The above result files with `.tsv` suffix are saved in `/test_data/Brassicaceae/
 
 In version 0.2.1 of snn_pipeline, a new collinearity mapping feature called synetmapping has been added, which can match synteny information to corresponding chromosomal blocks
 
-For example, we have obtained the specific block score file block_info_score.tsv through the `--block_mining` function of `synetcontext`, and after sorting the scores:
+For example, we have obtained the specific block score file `block_info_score.tsv` through the `--block_mining` function of `synetcontext`, and after sorting the scores:
 
 ```
 target_gene	block_id	block_specificity_score
