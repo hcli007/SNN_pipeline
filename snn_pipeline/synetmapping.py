@@ -1,12 +1,10 @@
 # CEG
 # haochenli
 # Python3
-# date: 24/9/2024 下午10:01
+# date: 01/11/2024 10:01AM
 # CEG
-# haochenli
-# Python3
-# date: 21/9/2024 上午11:42
 import sys
+import os
 import pandas as pd
 import re
 from collections import Counter
@@ -15,6 +13,7 @@ import multiprocessing
 
 
 def read_table(file_name):
+    # Read the file into a list
     out_table = []
     in_put = open(file_name, "r")
     for line1 in in_put:
@@ -26,7 +25,7 @@ def read_table(file_name):
 
 
 def read_dic(file_name):
-    """读取文件为字典"""
+    # Read a dictionary from a file
     out_dic = {}
     keys = []
     in_put = open(file_name, "r")
@@ -40,7 +39,15 @@ def read_dic(file_name):
     return out_dic
 
 
+def complete_path(input_path):
+    # Ensure that the input is an absolute path
+    if not os.path.isabs(input_path):
+        input_path = os.path.join(os.getcwd(), input_path)
+    return input_path
+
+
 def enumerate_count(file_name):
+    # Progress statistics
     with open(file_name) as f:
         for count, _ in enumerate(f, 1):
             pass
@@ -48,6 +55,7 @@ def enumerate_count(file_name):
 
 
 def get_file_matched_num(rex_str, net_f_table, output_matched_table_path):
+    # Calculate the number matched
     with open(output_matched_table_path, 'a+', encoding='utf-8') as f:
         rex_obj = re.compile(rex_str, re.VERBOSE)
         count = 0
@@ -60,6 +68,7 @@ def get_file_matched_num(rex_str, net_f_table, output_matched_table_path):
 
 
 def fill_dataframe_num_sp(loc_info, dataframe):
+    # Fill in the matrix based on the count results
     for l1 in loc_info:
         l1_sp = l1.split("\t")
         row_loc = l1_sp[0]
@@ -69,6 +78,7 @@ def fill_dataframe_num_sp(loc_info, dataframe):
 
 
 def get_loc_table(count_table, sp_cls_table):
+    # Obtain the filled information
     all_loc_table = []
     cls_table = read_table(sp_cls_table)
     cls_dic = {}
@@ -94,7 +104,8 @@ def get_loc_table(count_table, sp_cls_table):
     return all_loc_table
 
 
-def get_flank_gene_in_gff(input_gene_id, input_bed_path, input_flanking_gene_length, output_flanking_gene_list_path):
+def get_flank_gene_in_bed(input_gene_id, input_bed_path, input_flanking_gene_length, output_flanking_gene_list_path):
+    # Extract flanking genes ID from the bed file
     bed_table = read_table(input_bed_path)
     col1_table = []
     output_df = []
@@ -131,6 +142,7 @@ def get_flank_gene_in_gff(input_gene_id, input_bed_path, input_flanking_gene_len
 
 def stat_flanking_gene_syn_match_num(output_flanking_gene_list_path, input_syn_file, tem_output_path,
                                      output_matched_table):
+    # Count the number of hits for flanking genes in the overall synteny network
     flanking_gene_list_table = read_table(output_flanking_gene_list_path)
     task_volume = enumerate_count(output_flanking_gene_list_path)
     syn_f_table = read_table(input_syn_file)
@@ -146,6 +158,7 @@ def stat_flanking_gene_syn_match_num(output_flanking_gene_list_path, input_syn_f
 
 def stat_flanking_gene_syn_clade_match_num(output_flanking_gene_list_path, output_matched_table_path, sp_dic_path,
                                            output_sp_count_stat_path, output_sp_count_matrix_path):
+    # Count the statistical results according to the species' classification information
     flanking_gene_list_table = read_table(output_flanking_gene_list_path)
     matched_table = read_table(output_matched_table_path)
     sp_dic = read_dic(sp_dic_path)
@@ -209,13 +222,14 @@ def stat_flanking_gene_syn_clade_match_num(output_flanking_gene_list_path, outpu
 
 
 def synteny_mapping(gene_id, input_bed, output_path, flanking_gene_length, input_syn_dic, input_sp_dic):
+    # Implementation of the synteny_mapping function
     try:
         output_flanking_gene_list = f'{output_path}/{gene_id}_{flanking_gene_length}_flanking_gene.namelist'
         tem_output = f"{output_path}/{gene_id}_{flanking_gene_length}.tem2"
         output_matched_table = f"{output_path}/{gene_id}_{flanking_gene_length}.matched.tsv"
         output_sp_count_stat = f"{output_path}/{gene_id}_{flanking_gene_length}.stat.tsv"
         output_sp_count_matrix = f"{output_path}/{gene_id}_{flanking_gene_length}.stat.matrix.tsv"
-        get_flank_gene_in_gff(gene_id, input_bed, flanking_gene_length, output_flanking_gene_list)
+        get_flank_gene_in_bed(gene_id, input_bed, flanking_gene_length, output_flanking_gene_list)
         stat_flanking_gene_syn_match_num(output_flanking_gene_list, input_syn_dic, tem_output, output_matched_table)
         stat_flanking_gene_syn_clade_match_num(output_flanking_gene_list, output_matched_table, input_sp_dic,
                                                output_sp_count_stat, output_sp_count_matrix)
@@ -225,12 +239,11 @@ def synteny_mapping(gene_id, input_bed, output_path, flanking_gene_length, input
 
 
 def synteny_mapping_mutiprocess(gene_table, bed, out_dir, size, input_syn_dic, species_namelist_file, num_processes):
+    # Assign processes to different fragment search tasks
     pool = multiprocessing.Pool(processes=num_processes)
     pool.starmap(synteny_mapping, [(l1, bed, out_dir, size, input_syn_dic, species_namelist_file) for l1 in gene_table])
     pool.close()
     pool.join()
-
-
 
 
 def main():
@@ -267,9 +280,10 @@ def main():
     para = " ".join(sys.argv)
     feedback = f'Execution parameters:\t{para}'
     print(feedback, end="\n", flush=True)
-    target_gene_table = read_table(args.id_list)
-    synteny_mapping_mutiprocess(target_gene_table, args.bed, args.out_dir, args.size, args.SynNet_f,
-                                args.species_namelist_file, args.threads)
+    target_gene_table = read_table(complete_path(args.id_list))
+    synteny_mapping_mutiprocess(target_gene_table, complete_path(args.bed), complete_path(args.out_dir),
+                                complete_path(args.size), complete_path(args.SynNet_f),
+                                complete_path(args.species_namelist_file), complete_path(args.threads))
 
 
 if __name__ == "__main__":
