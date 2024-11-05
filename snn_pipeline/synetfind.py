@@ -1,7 +1,7 @@
 # CEG
 # haochenli
 # Python3
-# date: 26/7/2024 下午3:22
+# date: 29/10/2024 11:54PM
 import glob
 import shutil
 import subprocess
@@ -14,6 +14,7 @@ from Bio import SeqIO
 
 
 def read_table(file_name):
+    # Read the file into a list
     out_table = []
     in_put = open(file_name, "r")
     for line1 in in_put:
@@ -25,12 +26,14 @@ def read_table(file_name):
 
 
 def complete_path(input_path):
+    # Ensure that the input is an absolute path
     if not os.path.isabs(input_path):
         input_path = os.path.join(os.getcwd(), input_path)
     return input_path
 
 
 def check_external_software():
+    # Ensure that the software in the environment is correctly configured
     required_software = ['hmmsearch']
     missing = [pkg for pkg in required_software if shutil.which(pkg) is None]
     if missing:
@@ -38,6 +41,7 @@ def check_external_software():
 
 
 def extract_new(fasta_file, wanted_file, result_file):
+    # Extract the data
     wanted = set()
     with open(wanted_file) as f:
         for line in f:
@@ -53,6 +57,7 @@ def extract_new(fasta_file, wanted_file, result_file):
 
 
 def merge_files(output_filename, input_filenames):
+    # Merge files
     with open(output_filename, 'w') as outfile:
         for filename in input_filenames:
             with open(filename, 'r') as infile:
@@ -60,8 +65,10 @@ def merge_files(output_filename, input_filenames):
 
 
 def find_record(input_namelist, input_hmm, data_path, output_dir, evalue, threads, synet_file, retain_if):
+    # Search for sequences based on the given HMM file and extract the files where the HMM model hits
     check_external_software()
     input_hmm_name = os.path.basename(input_hmm)
+    # Define the output directory
     foldername = "SynNet_" + input_hmm_name + "_" + datetime.datetime.now().strftime("%Y%m%d_%H%M")
     result_path = f"{output_dir}/{foldername}"
     os.makedirs(result_path)
@@ -72,6 +79,7 @@ def find_record(input_namelist, input_hmm, data_path, output_dir, evalue, thread
         if not specie.startswith("#"):
             specie_sp = specie.split("\t")
             species_table_1col.append(specie_sp[0])
+    # Perform sequence retrieval using hmmsearch
     for species in species_table_1col:
         print(f"Searching proteins by module:{input_hmm_name}   sp_abb:{species}", end="\n", flush=True)
         with open(f"{result_path}/{species}.hmmout", 'a+', encoding='utf-8') as f1:
@@ -90,6 +98,7 @@ def find_record(input_namelist, input_hmm, data_path, output_dir, evalue, thread
                 else:
                     break
 
+        # Organize the results of hmmsearch to determine the species IDs where the HMM model has hits
         with open(f"{result_path}/{species}.hmm_genelist", 'a+', encoding='utf-8') as f3:
             for l2 in hmmout_table:
                 if l2.startswith(">>"):
@@ -100,11 +109,13 @@ def find_record(input_namelist, input_hmm, data_path, output_dir, evalue, thread
     print(f"merge genelist", end="\n", flush=True)
     merge_files(f"{result_path}/{input_hmm_name}.genes", glob.glob(f"{result_path}/*.hmm_genelist"))
     merge_files_set = set(read_table(f"{result_path}/{input_hmm_name}.genes"))
-    
+
+    # Combine the IDs of hmmsearch hits from various species
     with open(f"{result_path}/all.hmm_genelist", 'a+', encoding='utf-8') as f3_2:
         for l2_2 in merge_files_set:
             print(l2_2, file=f3_2)
-             
+
+    # Extract corresponding results from the overall synteny network based on the list
     synet_table = read_table(synet_file)
     synet_table_match = []
     with open(f"{result_path}/{input_hmm_name}.genelist_SynNet_f", 'a+', encoding='utf-8') as f4:
@@ -131,6 +142,7 @@ def find_record(input_namelist, input_hmm, data_path, output_dir, evalue, thread
 
 
 def find_record_customized(input_customized_namelist, output_dir, synet_file, retain_if):
+    # Extract information from the overall synteny network based on a customized list
     check_external_software()
     customized_name = os.path.basename(input_customized_namelist)
     foldername = "SynNet_" + customized_name + "_" + datetime.datetime.now().strftime("%Y%m%d_%H%M")
