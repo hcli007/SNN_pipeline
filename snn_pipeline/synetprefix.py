@@ -1,7 +1,7 @@
 # CEG
 # haochenli
 # Python3
-# date: 24/7/2024 上午11:05
+# date: 30/11/2024 11:05PM
 import argparse
 import os
 import sys
@@ -9,12 +9,14 @@ import datetime
 
 
 def complete_path(input_path):
+    # Ensure that the input is an absolute path
     if not os.path.isabs(input_path):
         input_path = os.path.join(os.getcwd(), input_path)
     return input_path
 
 
 def read_table(file_name):
+    # Read the file into a list
     out_table = []
     in_put = open(file_name, "r")
     for line1 in in_put:
@@ -26,6 +28,7 @@ def read_table(file_name):
 
 
 def block_trans(input_file, output_dir):
+    # Transform the format of the overall synteny network
     foldername = "SynNetTrans" + datetime.datetime.now().strftime("%Y%m%d_%H%M")
     os.makedirs(f"{output_dir}/{foldername}")
     input_file_name = os.path.basename(input_file)
