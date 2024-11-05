@@ -252,3 +252,142 @@ The results of `--block_mining` command are saved in the `specific_block` folder
 The results of `--KEGG` command are saved in `KEGG_annotation folder`, which contains the annotation information for the nodes,
 
 The above result files with `.tsv` suffix are saved in `/test_data/Brassicaceae/result` directory of this site.
+
+In version 0.2.1 of snn_pipeline, a new collinearity mapping feature called synetmapping has been added, which can match synteny information to corresponding chromosomal blocks
+
+For example, we have obtained the specific block score file block_info_score.tsv through the `--block_mining` function of `synetcontext`, and after sorting the scores:
+
+```
+target_gene	block_id	block_specificity_score
+AlyrAL5G19180&ath_AT3G29255	ath_Alyr287	542.2441494
+AlyrAL2G25240&ath_AT1G66960	ath_Alyr85	542.2441494
+ath_AT3G12070&thh_10021170m	thh_ath244	542.2441494
+AlyrAL5G23630&ath_AT3G45130	ath_Alyr286	523.2628036
+AlyrAL8G20190&ath_AT5G48010	ath_Alyr492	505.0476368
+gra_005G208400&vvi_01000415001	gra_vvi398	475.4308418
+AALP_AA3G344300&thh_10022563m	thh_AALP119	430.0449313
+AALP_AA3G344300&bol_012476	bol_AALP195	411.0423863
+AALP_AA5G078800&AlyrAL5G23630	Alyr_AALP234	404.9909972
+AALP_AA5G078800&ath_AT3G45130	ath_AALP207	404.9909972
+tca_029480&vvi_01021474001	tca_vvi478	399.884056
+Bostr.0556s0559&cru_10016727	cru_Bost513	395.3533108
+bnp_BnaA04g13460D&bnp_BnaC04g35590D	bnp1071	392.320109
+bol_012476&thh_10022563m	bol_thh187	382.5703676
+gra_011G044500&tca_029480	gra_tca938	380.1720883
+gra_011G044500&vvi_01021474001	gra_vvi1058	380.1720883
+Csat104780146&cru_10016727	cru_Csat228	379.291982
+Csat104713532&Csat104751748	Csat883	367.2519706
+Bostr.0556s0559&Csat104780146	Csat_Bost1483	359.5800143
+bnp_BnaA04g13460D&bra_D01377	bnp_bra673	358.4514262
+```
+
+We select the genes ath_AT3G29255, ath_AT1G66960, ath_AT3G45130, and ath_AT5G48010, and examine the synteny hits in the regions where these genes are located:
+
+`synetmapping -i test_data/Brassicaceae/species_list -l test_data/Brassicaceae/high_score_ath.namelist --bed test_data/Brassicaceae/ath.bed -n your_path/SynNetBuild/SynNet-k6s5m25  -o your_output_path -S 50 -p 4`
+
+We will obtain the `stat.matrix.tsv` file for these genes, for example, `ath_AT5G48010_50.stat.matrix.tsv`：
+
+```
+ID	Super_Rosids	Super_Asterids	Basal_Eudicots	Monocots	Magnoliids	Basal_Angiosperm
+ath_AT5G47530	41	0	0	0	0	0
+ath_AT5G47540	54	0	0	0	0	0
+ath_AT5G47550	24	0	0	0	0	0
+ath_AT5G47560	29	0	0	0	0	0
+ath_AT5G47570	30	0	0	0	0	0
+ath_AT5G47580	27	0	1	0	0	0
+ath_AT5G47590	11	0	0	0	0	0
+ath_AT5G47600	15	0	0	0	0	0
+ath_AT5G47610	44	0	0	0	0	0
+ath_AT5G47620	31	0	0	0	0	0
+ath_AT5G47630	19	0	0	0	0	0
+ath_AT5G47635	47	0	0	0	0	0
+ath_AT5G47640	17	0	0	0	0	0
+ath_AT5G47650	33	0	0	0	0	0
+ath_AT5G47660	30	0	0	0	0	0
+ath_AT5G47670	4	0	0	0	0	0
+ath_AT5G47680	28	0	0	0	0	0
+ath_AT5G47690	31	0	0	0	0	0
+ath_AT5G47700	12	0	0	0	0	0
+ath_AT5G47710	25	0	0	0	0	0
+ath_AT5G47720	23	0	0	0	0	0
+ath_AT5G47730	32	0	0	0	0	0
+ath_AT5G47740	30	0	0	0	0	0
+ath_AT5G47750	26	0	0	0	0	0
+ath_AT5G47760	25	0	0	0	0	0
+ath_AT5G47770	32	0	0	0	0	0
+ath_AT5G47780	15	0	0	0	0	0
+ath_AT5G47790	12	0	0	0	0	0
+ath_AT5G47800	10	0	0	0	0	0
+ath_AT5G47810	11	0	0	0	0	0
+ath_AT5G47820	23	0	0	0	0	0
+ath_AT5G47830	19	0	0	0	0	0
+ath_AT5G47840	18	0	0	0	0	0
+ath_AT5G47850	9	0	0	0	0	0
+ath_AT5G47860	16	0	1	0	0	0
+ath_AT5G47870	19	0	1	0	0	0
+ath_AT5G47880	21	0	0	0	0	0
+ath_AT5G47890	21	0	1	0	0	0
+ath_AT5G47900	16	0	1	0	0	0
+ath_AT5G47910	20	0	1	0	0	0
+ath_AT5G47920	23	0	1	0	0	0
+ath_AT5G47928	0	0	0	0	0	0
+ath_AT5G47930	23	0	1	0	0	0
+ath_AT5G47940	15	0	0	0	0	0
+ath_AT5G47950	3	0	0	0	0	0
+ath_AT5G47960	7	0	0	0	0	0
+ath_AT5G47970	7	0	0	0	0	0
+ath_AT5G47980	3	0	0	0	0	0
+ath_AT5G47990	2	0	0	0	0	0
+ath_AT5G48000	3	0	0	0	0	0
+ath_AT5G48010	3	0	0	0	0	0
+ath_AT5G48020	17	0	0	0	0	0
+ath_AT5G48030	25	0	0	0	0	0
+ath_AT5G48040	18	0	0	0	0	0
+ath_AT5G48050	3	0	0	0	0	0
+ath_AT5G48060	16	0	0	0	0	0
+ath_AT5G48070	11	0	0	0	0	0
+ath_AT5G48090	15	0	0	0	0	0
+ath_AT5G48100	18	0	0	0	0	0
+ath_AT5G48110	0	0	0	0	0	0
+ath_AT5G48120	14	0	0	0	0	0
+ath_AT5G48130	13	0	1	0	0	0
+ath_AT5G48140	45	0	0	0	0	0
+ath_AT5G48150	28	0	1	0	0	0
+ath_AT5G48160	38	0	1	0	0	0
+ath_AT5G48170	30	0	1	0	0	0
+ath_AT5G48175	5	0	0	0	0	0
+ath_AT5G48180	42	0	1	0	0	0
+ath_AT5G48190	0	0	0	0	0	0
+ath_AT5G48200	0	0	0	0	0	0
+ath_AT5G48205	0	0	0	0	0	0
+ath_AT5G48210	12	0	0	0	0	0
+ath_AT5G48220	23	0	0	0	0	0
+ath_AT5G48230	30	0	1	0	0	0
+ath_AT5G48240	30	0	1	0	0	0
+ath_AT5G48250	52	0	1	0	0	0
+ath_AT5G48270	35	0	1	0	0	0
+ath_AT5G48280	0	0	0	0	0	0
+ath_AT5G48290	36	0	1	0	0	0
+ath_AT5G48300	19	0	1	0	0	0
+ath_AT5G48310	23	0	1	0	0	0
+ath_AT5G48320	1	0	0	0	0	0
+ath_AT5G48330	14	0	1	0	0	0
+ath_AT5G48335	40	0	0	0	0	0
+ath_AT5G48340	21	0	0	0	0	0
+ath_AT5G48350	1	0	0	0	0	0
+ath_AT5G48360	50	0	0	0	0	0
+ath_AT5G48370	22	0	0	0	0	0
+ath_AT5G48375	2	0	0	0	0	0
+ath_AT5G48380	23	0	0	0	0	0
+ath_AT5G48385	26	0	0	0	0	0
+ath_AT5G48390	16	0	0	0	0	0
+ath_AT5G48400	38	0	0	0	0	0
+ath_AT5G48410	0	0	0	0	0	0
+ath_AT5G48420	2	0	0	0	0	0
+ath_AT5G48430	10	0	0	0	0	0
+ath_AT5G48440	22	0	0	0	0	0
+ath_AT5G48450	24	0	0	0	0	0
+ath_AT5G48460	24	0	0	0	0	0
+ath_AT5G48470	25	0	0	0	0	0
+ath_AT5G48480	32	0	0	0	0	0
+```
