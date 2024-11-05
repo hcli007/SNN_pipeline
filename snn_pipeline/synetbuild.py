@@ -1,7 +1,7 @@
 # CEG
 # haochenli
 # Python3
-# date: 24/7/2024 下午10:23
+# date: 28/10/2024 11:23PM
 import subprocess
 import os
 import sys
@@ -10,10 +10,10 @@ import time
 import shutil
 import itertools
 import argparse
-import logging
 
 
 def check_external_software():
+    # Ensure that the software in the environment is correctly configured
     required_software = ['MCScanX', 'diamond']
     missing = [pkg for pkg in required_software if shutil.which(pkg) is None]
     if missing:
@@ -21,12 +21,14 @@ def check_external_software():
 
 
 def complete_path(input_path):
+    # Ensure that the input is an absolute path
     if not os.path.isabs(input_path):
         input_path = os.path.join(os.getcwd(), input_path)
     return input_path
 
 
 def merge_files(output_filename, input_filenames):
+    # Merge files
     with open(output_filename, 'w') as outfile:
         for filename in input_filenames:
             with open(filename, 'r') as infile:
@@ -34,6 +36,7 @@ def merge_files(output_filename, input_filenames):
 
 
 def read_table(file_name):
+    # Read the file into a list
     out_table = []
     in_put = open(file_name, "r")
     for line1 in in_put:
@@ -45,7 +48,10 @@ def read_table(file_name):
 
 
 def synet_build(input_file, data_path, output_path, hits, anchors, gaps, threads, duplicate, tandem):
+    # Construct the overall synteny network for the species
     check_external_software()
+
+    # Ensure that the server currently has sufficient computational resources
     while True:
         running = subprocess.check_output(["jobs", "-p"], universal_newlines=True)
         if len(running.strip().split('\n')) < int(threads):
@@ -54,6 +60,8 @@ def synet_build(input_file, data_path, output_path, hits, anchors, gaps, threads
 
     species_table = read_table(input_file)
     species_table_1col = []
+
+    # Define the output path
     for specie in species_table:
         if not specie.startswith("#"):
             specie_sp = specie.split("\t")
@@ -66,11 +74,13 @@ def synet_build(input_file, data_path, output_path, hits, anchors, gaps, threads
     os.makedirs(diamond_db_path)
     os.chdir(result_path)
 
+    # Build a database with diamond
     for sp in species_table_1col:
         print(f"make database for species_{sp}")
         subprocess.run(["diamond", "makedb", "--in", f"{data_path}/{sp}.pep", "-d",
                         f"{diamond_db_path}/{sp}", "-p", str(threads)], check=True)
 
+    # Species-to-species pairwise diamond alignment
     for i in species_table_1col:
         for j in species_table_1col:
             print(f"blast {i} against {j}")
@@ -79,7 +89,8 @@ def synet_build(input_file, data_path, output_path, hits, anchors, gaps, threads
                  f"{diamond_db_path}/{j}", "-o", f"{i}_{j}", "-p",
                  str(threads), "--max-hsps", "1", "-k", str(hits)], check=True)
 
-    print("Now we do intraspecies MCScanX, prepare inputs..")
+    # Calculate the synteny blocks between species
+    print("Now we do intraspecies MCScanX, prepare inputs.")
     for i in species_table_1col:
         for j in species_table_1col:
             if i == j:
@@ -100,6 +111,7 @@ def synet_build(input_file, data_path, output_path, hits, anchors, gaps, threads
                          f"{result_path}/{i}.tandem.collinear"], check=False)
                     print("detect collinear tandem arrays.")
 
+    # Create a non-redundant set
     combinations = list(itertools.combinations(species_table_1col, 2))
     for combo in combinations:
         i = combo[0]
@@ -111,6 +123,7 @@ def synet_build(input_file, data_path, output_path, hits, anchors, gaps, threads
         print(f"Intra-species MCScanX here for species {i}_{j}")
         subprocess.run(["MCScanX", "-a", "-b 2", f"{i}_{j}", "-s", str(anchors), "-m", str(gaps)], check=True)
 
+    # Output the results
     lines_list = []
     for filename in os.listdir('.'):
         if filename.endswith('.collinearity'):
