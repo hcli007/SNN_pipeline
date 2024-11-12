@@ -282,8 +282,8 @@ def main():
     print(feedback, end="\n", flush=True)
     target_gene_table = read_table(complete_path(args.id_list))
     synteny_mapping_mutiprocess(target_gene_table, complete_path(args.bed), complete_path(args.out_dir),
-                                complete_path(args.size), complete_path(args.SynNet_f),
-                                complete_path(args.species_namelist_file), complete_path(args.threads))
+                                args.size, complete_path(args.SynNet_f),
+                                complete_path(args.species_namelist_file), args.threads)
 
 
 if __name__ == "__main__":
