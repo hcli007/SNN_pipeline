@@ -407,7 +407,9 @@ Taking Cytoscape as an example, import the `k1.edges.tsv` file from the 'K_core-
 
 Here are the results of the collinearity cluster visualization generated from this data：
 ![bra_gold_OSC-01](https://github.com/user-attachments/assets/375f71c6-3de2-4acf-aba4-409276584aa0)
-![bra_gold_BAHD-01](https://github.com/user-attachments/assets/92185bea-0499-4176-979f-dcc87c338ff7)
+![bra_gold_BAHD-01](https://github.com/user-attachments/assets/6d0ad9b0-da01-492b-aa05-8db49a9d0133)
+![bra_gold_CYP-01](https://github.com/user-attachments/assets/ec4a4668-8716-4f1f-a634-c558f034e8dd)
+
 
 
 
