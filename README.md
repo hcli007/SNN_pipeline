@@ -399,3 +399,9 @@ ath_AT5G48470	25	0	0	0	0	0
 ath_AT5G48480	32	0	0	0	0	0
 ```
 
+The cluster information of genes in the network is saved in `sp_cluster.tsv` file, when using the `--KEGG` function, KO annotation information will also be integrated in file `sp_KO_cluster.tsv`,
+
+These files can be directly imported into network visualization software, we recommend Cytoscape and Gephi here.
+
+Taking Cytoscape as an example, import the `k1.edges.tsv` file from the 'K_core-result/edge/' folder (import network from file system), and then import the `sp_KO_cluster.tsv` file (import table from file)
+
