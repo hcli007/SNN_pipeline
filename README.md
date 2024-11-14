@@ -218,7 +218,7 @@ Use `SQHop_cyclase_C_N.namelist` as the input list to build OSC-SNN，
 
 `synetcontext -i your_path/test_data/Brassicaceae/species_list -l your_path/SQHop_cyclase_C_N.namelist -b your_path/SynNetBuild/SQHop_cyclase_C_N.hmm.genelist_SynNet_f -N your_path/SynNetTrans/SynNet-k6s5m25.prefix -d your_path/test_data/Brassicaceae/ -o your_output_path -S 10 --block_stat --block_mining --KEGG`
 
-**The three functions (--block_stat, --block_mining, --KEGG) have no dependency on each other and can run independently**
+**The three functions (--block_stat, --block_mining, --KEGG) have no dependency on each other and can run independently.**
 
 The command will generate multiple folders and files.
 <a name="explanation"></a>
