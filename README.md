@@ -403,5 +403,13 @@ The cluster information of genes in the network is saved in `sp_cluster.tsv` fil
 
 These files can be directly imported into network visualization software, we recommend Cytoscape and Gephi here.
 
-Taking Cytoscape as an example, import the `k1.edges.tsv` file from the 'K_core-result/edge/' folder (import network from file system), and then import the `sp_KO_cluster.tsv` file (import table from file)
+Taking Cytoscape as an example, import the `k1.edges.tsv` file from the 'K_core-result/edge/' folder (import network from file system), and then import the `sp_KO_cluster.tsv` file (import table from file).
+
+Here are the results of the collinearity cluster visualization generated from this data：
+![bra_gold_OSC-01](https://github.com/user-attachments/assets/375f71c6-3de2-4acf-aba4-409276584aa0)
+![bra_gold_BAHD-01](https://github.com/user-attachments/assets/92185bea-0499-4176-979f-dcc87c338ff7)
+
+
+
+
 
