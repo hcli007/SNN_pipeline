@@ -1,3 +1,7 @@
 *.bed linguist-vendored
 *.pep linguist-vendored
 *.tsv linguist-vendored
+*.group linguist-vendored
+*.2col linguist-vendored
+*.degree linguist-vendored
+*.nodes linguist-vendored
