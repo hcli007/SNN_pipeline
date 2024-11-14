@@ -27,6 +27,7 @@ pandas>=1.4.1
 - [build network_database](#builddatabase)
 - [extract target network](#extract)
 - [build SNN](#SNN)
+- [example](#example)
 
 ## Usage
 <a name="install"></a>
@@ -181,6 +182,7 @@ atr_scaffold00040.35atr	Basal-Angiosperm	Amborellales	Amborellaceae	Amborella tr
 ath_AT1G43620	Super-Rosides	Brassicales	Brassicaceae	Arabidopsis thaliana	sterol 3beta-glucosyltransferase [EC:2.4.1.173]	123	253
 ```
 
+<a name="example"></a>
 Next, we will demonstrate how to construct the SNN for OSC (Oxidosqualene cyclase) in Brassicaceae species. Example datasets and results can be obtained from the site`test_data/Brassicaceae`.
 Due to upload limitations, the PEP data in the example has been compressed using zip. Please decompress it before use by running`unzip your_path/Brassicaceae/*.zip`.
 
