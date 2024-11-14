@@ -28,7 +28,7 @@ pandas>=1.4.1
 - [extract target network](#extract)
 - [build SNN](#SNN)
 - [example](#example)
-- [explanation](#explanation)
+- [file explanation](#explanation)
 
 ## Usage
 <a name="install"></a>
