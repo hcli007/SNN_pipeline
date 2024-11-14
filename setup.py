@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='snn_pipeline',
-    version='0.1.2',
+    version='0.2.3',
     packages=find_packages(),
     package_data={'snn_pipeline': ['include data/*.pep', 'include data/*.bed', 'include data/*.hmm',
                                    'include data/species_list']},
@@ -18,6 +18,7 @@ setup(
                       'networkx>=2.6.3',
                       'numpy>=1.21.2',
                       'pandas>=1.4.1',
+                      'scikit-learn>=1.3.2',
                       ],
 
     classifiers=['Development Status :: 4 - Beta',
@@ -32,7 +33,8 @@ setup(
             'synetbuild = snn_pipeline.synetbuild:main',
             'synetfind = snn_pipeline.synetfind:main',
             'synetprefix = snn_pipeline.synetprefix:main',
-            'synetcontext = snn_pipeline.synetcontext:main'
+            'synetcontext = snn_pipeline.synetcontext:main',
+            'synetmapping = snn_pipeline.synetmapping:main'
         ],
     },
 )
