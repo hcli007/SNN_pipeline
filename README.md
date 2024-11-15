@@ -184,7 +184,12 @@ ath_AT1G43620	Super-Rosides	Brassicales	Brassicaceae	Arabidopsis thaliana	sterol
 ```
 
 <a name="example"></a>
-Next, we will demonstrate how to construct the SNN for OSC (Oxidosqualene cyclase) in Brassicaceae species. Example datasets and results can be obtained from the site`test_data/Brassicaceae`.
+Next, we will demonstrate how to construct the SNN for OSC (Oxidosqualene cyclase) in Brassicaceae species. The species in the dataset are referenced from the study on flanking genes in Brassicaceae by Liu et al.
+
+**Liu Z, Duran HGS, Harnvanichvech Y, Stephenson MJ, Schranz ME, Nelson D, Medema MH, Osbourn A. 2020.** Drivers of metabolic diversification: how dynamic genomic neighbourhoods generate new biosynthetic pathways in the Brassicaceae. New Phytologist **227**: 1109-1123.
+
+Example datasets and results can be obtained from the site`test_data/Brassicaceae`.
+
 Due to upload limitations, the PEP data in the example has been compressed using zip. Please decompress it before use by running`unzip your_path/Brassicaceae/*.zip`.
 
 First, construct the overall synteny network for the Brassicaceae species.
