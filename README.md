@@ -184,9 +184,9 @@ ath_AT1G43620	Super-Rosides	Brassicales	Brassicaceae	Arabidopsis thaliana	sterol
 ```
 
 <a name="example"></a>
-Next, we will demonstrate how to construct the SNN for OSC (Oxidosqualene cyclase) in Brassicaceae species. The species in the dataset are referenced from the study on flanking genes in Brassicaceae by Liu et al.
+Next, we will demonstrate how to construct the SNN for OSC (Oxidosqualene cyclase) in Brassicaceae species. The species in the dataset are referenced from the study on OSC flanking genes in Brassicaceae by Liu _et al_.
 
-**Liu Z, Duran HGS, Harnvanichvech Y, Stephenson MJ, Schranz ME, Nelson D, Medema MH, Osbourn A. 2020.** Drivers of metabolic diversification: how dynamic genomic neighbourhoods generate new biosynthetic pathways in the Brassicaceae. New Phytologist **227**: 1109-1123.
+**Liu Z, Duran HGS, Harnvanichvech Y, Stephenson MJ, Schranz ME, Nelson D, Medema MH, Osbourn A. 2020.** Drivers of metabolic diversification: how dynamic genomic neighbourhoods generate new biosynthetic pathways in the Brassicaceae. _New Phytologist_ **227**: 1109-1123.
 
 Example datasets and results can be obtained from the site`test_data/Brassicaceae`.
 
@@ -201,6 +201,7 @@ The OSC generally contains two domains, SQHop_cyclase_C and SQHop_cyclase_N, so 
 We can obtain a list of sequence IDs in the dataset that contain the aforementioned domains by running `synetfind` twice.
 
 `synetfind -i your_path/test_data/Brassicaceae/species_list -m your_path/test_data/Brassicaceae/SQHop_cyclase_C.hmm -d your_path/test_data/Brassicaceae/ -n your_path/SynNetBuild/SynNet-k6s5m25 -o your_output_path`
+
 `synetfind -i your_path/test_data/Brassicaceae/species_list -m your_path/test_data/Brassicaceae/SQHop_cyclase_N.hmm -d your_path/test_data/Brassicaceae/ -n your_path/SynNetBuild/SynNet-k6s5m25 -o your_output_path`
 
 The next step is to obtain the intersection of the two lists.
