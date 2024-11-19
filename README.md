@@ -49,9 +49,9 @@ Install snn_pipline.
 
 You can also manually install this process.
 
-`tar -zxvf snn_pipeline-0.1.0.tar.gz`
+`tar -zxvf snn_pipeline-0.2.3.tar.gz`
 
-`cd snn_pipeline-0.1.0`
+`cd snn_pipeline-0.2.3`
 
 `pip install .`
 
