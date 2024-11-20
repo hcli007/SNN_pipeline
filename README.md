@@ -262,7 +262,7 @@ The results of `--block_mining` command are saved in the `specific_block` folder
 
 `block_info_score.tsv` file contains the block specificity scores calculated from the feature matrix.
 
-The results of `--KEGG` command are saved in `KEGG_annotation folder`, which contains the annotation information for the nodes,
+The results of `--KEGG` command are saved in `KEGG_annotation` folder, which contains the annotation information for the nodes,
 
 The above result files with `.tsv` suffix are saved in `/test_data/Brassicaceae/result` directory of this site.
 
