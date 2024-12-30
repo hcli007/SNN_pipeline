@@ -194,7 +194,7 @@ Due to upload limitations, the PEP data in the example has been compressed using
 
 First, construct the overall synteny network for the Brassicaceae species.
 
-`synbuild -i your_path/test_data/Brassicaceae/species_list -d your_path/test_data/Brassicaceae/ -o your_path`
+`synetbuild -i your_path/test_data/Brassicaceae/species_list -d your_path/test_data/Brassicaceae/ -o your_path`
 
 The OSC generally contains two domains, SQHop_cyclase_C and SQHop_cyclase_N, so we need to determine which sequences in the dataset contain both of the above domains. 
 
