@@ -688,14 +688,14 @@ def block_specificity_score(block_info_df, out_put):
 
     matrix = np.array(matrix_prefix_table)
     arr_numeric = matrix.astype(float)
-    # 计算每一列的平均值
+    # Calculate the average value for each column
     col_means = np.mean(arr_numeric, axis=0)
-    # 计算每一列的标准差
+    # Calculate the standard deviation of each column
     col_stds = np.std(arr_numeric, axis=0)
     col_stds[col_stds == 0] = 1e-8
-    # 标准化处理，然后取绝对值
+    # Standardize and then take the absolute value
     standardized_matrix = np.abs((arr_numeric - col_means) / col_stds)
-    # 计算每一行的和
+    # Calculate the sum of each row
     row_sums = np.sum(standardized_matrix, axis=1)
     count = 0
     with open(out_put, 'a+', encoding='utf-8') as f1:
