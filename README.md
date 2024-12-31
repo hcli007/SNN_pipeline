@@ -146,9 +146,9 @@ In the example, the `-e` parameter is used, which will extract the node informat
 
 If you have classified genes based on phylogenetic relationships or community structures in a network, or if you have specific nodes of interest, you can use the `-I` instead of `-e` as input:
 
-`synetcontext -i your_path/species_list -I your_path/ID_list_file -n your_path/SynNet_f_file -N your_path/prefix_file -d your_pep_bed_path -o your_output_path -S 10 --block_stat --KEGG`
+`synetcontext -i your_path/species_list -l your_path/ID_list_file -n your_path/SynNet_f_file -N your_path/prefix_file -d your_pep_bed_path -o your_output_path -S 10 --block_stat --KEGG`
 
-The `-I` parameter requires you to prepare a customized list of nodes:
+The `-l` parameter requires you to prepare a customized list of nodes:
 ```
 AlyrAL1G11030
 AlyrAL1G11030
