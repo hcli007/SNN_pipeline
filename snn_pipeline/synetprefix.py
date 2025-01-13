@@ -1,7 +1,7 @@
 # CEG
 # haochenli
 # Python3
-# date: 30/11/2024 11:05PM
+# v0.2.5
 import argparse
 import os
 import sys
