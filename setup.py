@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='snn_pipeline',
-    version='0.2.3',
+    version='0.2.5',
     packages=find_packages(),
     package_data={'snn_pipeline': ['include data/*.pep', 'include data/*.bed', 'include data/*.hmm',
                                    'include data/species_list']},
