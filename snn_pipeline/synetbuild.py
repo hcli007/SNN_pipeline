@@ -1,7 +1,7 @@
 # CEG
 # haochenli
 # Python3
-# date: 28/10/2024 11:23PM
+# v0.2.5
 import subprocess
 import os
 import sys
@@ -53,10 +53,13 @@ def synet_build(input_file, data_path, output_path, hits, anchors, gaps, threads
 
     # Ensure that the server currently has sufficient computational resources
     while True:
-        running = subprocess.check_output(["jobs", "-p"], universal_newlines=True)
-        if len(running.strip().split('\n')) < int(threads):
-            break
-        time.sleep(1)
+        try:
+            running = subprocess.check_output(["jobs", "-p"], universal_newlines=True)
+            if len(running.strip().split('\n')) < int(threads):
+                break
+            time.sleep(1)
+        except FileNotFoundError:
+            pass
 
     species_table = read_table(input_file)
     species_table_1col = []
