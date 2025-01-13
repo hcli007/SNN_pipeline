@@ -1,8 +1,7 @@
 # CEG
 # haochenli
 # Python3
-# date: 01/11/2024 10:01AM
-# CEG
+# v0.2.5
 import sys
 import os
 import pandas as pd
