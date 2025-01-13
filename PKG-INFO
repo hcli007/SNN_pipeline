@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: snn_pipeline
-Version: 0.1.2
+Version: 0.2.5
 Summary: A pipeline for constructing and analyzing synteny network
 Home-page: https://github.com/hcli007/SNN_pipeline
 Author: Haochen li, Tao Zhao
