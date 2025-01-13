@@ -1,7 +1,7 @@
 # CEG
 # haochenli
 # Python3
-# date: 29/10/2024 11:54PM
+# v0.2.5
 import glob
 import shutil
 import subprocess
