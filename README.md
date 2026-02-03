@@ -3,7 +3,7 @@
 # A pipeline for constructing and analyzing synteny network
 A pipeline for constructing and analyzing synteny network.
 
-Related papers：Genomic investigation of plant secondary metabolism: insights from synteny network analysis of oxidosqualene cyclase flanking genes
+Related paper：Genomic investigation of plant secondary metabolism: insights from synteny network analysis of oxidosqualene cyclase flanking genes
 
 DOI:https://doi.org/10.1111/nph.20357 
 ## Requirements
